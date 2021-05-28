@@ -9,21 +9,24 @@ namespace PDF_Merge
         static void Main(string[] args)
         {
 
-            
+
 
 
             PdfFileEditor pdfEditor = new PdfFileEditor();
+
+            // С двух в один
+
+            try
+            {
+                pdfEditor.Concatenate("C://real.pdf", "C://Example.pdf", "C://Result.pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             
 
-            //try
-            //{
-            //    pdfEditor.Concatenate("C://real.pdf", "C://Example.pdf", "C://Result.pdf");
-            //}
-            //catch(Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-
+            // С коллекции в один
             FileStream outputStream = new FileStream("C://Merged.pdf", FileMode.Create);
             FileStream[] streamArray = new FileStream[3];
             streamArray[0] = new FileStream("C://real.pdf", FileMode.Open);
@@ -35,10 +38,11 @@ namespace PDF_Merge
                 pdfEditor.Concatenate(streamArray, outputStream);
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+           
         }
     }
 }
